@@ -32,10 +32,13 @@ export default function DoctorView({ screeningResult, symptoms, onChangeSettings
       dokter ? `Dokter: ${dokter.nama}` : '',
     ].filter(Boolean).join('\n')
 
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
+    if (!navigator.clipboard) {
+      alert('Gagal menyalin. Silakan salin teks secara manual.')
+      return
+    }
+    navigator.clipboard.writeText(text)
+      .then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
+      .catch(() => { alert('Gagal menyalin. Silakan salin teks secara manual.') })
   }
 
   return (
