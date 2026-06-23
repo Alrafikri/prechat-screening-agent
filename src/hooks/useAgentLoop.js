@@ -122,7 +122,9 @@ export function useAgentLoop({ apiKey, model, onAiMessage, onSymptom, onFinalize
 
   const autoStart = useCallback(async () => {
     setIsLoading(true)
-    const startMsgs = [...msgs, { role: 'user', content: 'Halo' }]
+    const hour = new Date().getHours()
+    const waktu = hour < 12 ? 'pagi' : hour < 18 ? 'sore' : 'malam'
+    const startMsgs = [...msgs, { role: 'user', content: `Halo, saat ini ${waktu}.` }]
     setMsgs(startMsgs)
     await runLoop(startMsgs)
   }, [msgs, runLoop])
