@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAgentLoop } from '../hooks/useAgentLoop'
 
-export default function PatientChat({ apiConfig, onSymptom, onFinalize, screeningResult, onHandoff }) {
+export default function PatientChat({ apiConfig, onSymptom, onFinalize, screeningResult, onHandoff, onNewChat, onChangeSettings }) {
   const [chatMessages, setChatMessages] = useState([])
   const [input, setInput] = useState('')
   const bottomRef = useRef(null)
@@ -42,6 +42,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
             <div style={styles.sub}>Asisten Perawat AI</div>
           </div>
         </div>
+        <button style={styles.settingsBtn} onClick={onChangeSettings} aria-label="Pengaturan">⚙</button>
       </header>
 
       {/* Chat */}
@@ -74,8 +75,11 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
       <div style={styles.bottomBar}>
         {screeningResult && (
           <div style={styles.handoffBanner}>
-            <span style={styles.handoffText}>✓ Skrining selesai — ringkasan siap untuk dokter</span>
-            <button style={styles.handoffBtn} onClick={onHandoff}>Serahkan ke Dokter →</button>
+            <span style={styles.handoffText}>✓ Skrining selesai</span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button style={styles.handoffBtn} onClick={onNewChat}>🔄 Baru</button>
+              <button style={styles.handoffBtn} onClick={onHandoff}>Serahkan ke Dokter →</button>
+            </div>
           </div>
         )}
         <form onSubmit={handleSend} style={styles.inputRow}>
@@ -107,6 +111,7 @@ const styles = {
   kawung: { position: 'fixed', inset: 0, backgroundImage: KAWUNG_SVG, pointerEvents: 'none', zIndex: 0 },
   topbar: { position: 'relative', zIndex: 10, background: 'var(--surface)', borderBottom: '1.5px solid var(--border)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 },
   topbarLeft: { display: 'flex', alignItems: 'center', gap: 10 },
+  settingsBtn: { fontSize: 16, color: 'var(--muted)', background: 'var(--ground)', border: '1.5px solid var(--border)', borderRadius: 7, width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
   logo: { width: 34, height: 34, background: 'var(--accent)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, boxShadow: '0 2px 6px rgba(212,146,10,.3)', flexShrink: 0 },
   title: { fontSize: 14, fontWeight: 800, letterSpacing: '-0.02em' },
   sub: { fontSize: 11.5, color: 'var(--muted)', fontWeight: 500 },

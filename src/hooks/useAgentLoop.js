@@ -27,8 +27,10 @@ export function useAgentLoop({ apiKey, model, onAiMessage, onSymptom, onFinalize
           userMsg = 'Saldo OpenRouter habis. Silakan isi ulang di openrouter.ai.'
         } else if (msg.includes('429')) {
           userMsg = 'Terlalu banyak permintaan. Mohon tunggu sebentar dan coba lagi.'
+        } else if (msg.toLowerCase().includes('tools') || msg.toLowerCase().includes('function')) {
+          userMsg = `Model tidak mendukung fitur ini. Coba ganti model lain (contoh: OpenRouter Free Router).\n\nPesan error: ${msg}`
         } else {
-          userMsg = 'Maaf, terjadi kesalahan koneksi. Silakan coba lagi.'
+          userMsg = `Terjadi kesalahan:\n${msg}`
         }
         onAiMessage(userMsg)
         setIsLoading(false)

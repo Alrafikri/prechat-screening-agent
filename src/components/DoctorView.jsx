@@ -5,7 +5,7 @@ import DoctorCard from './DoctorCard'
 import { matchDoctor } from '../lib/matchDoctor'
 import dokterList from '../data/dokter.json'
 
-export default function DoctorView({ screeningResult, symptoms, onChangeSettings }) {
+export default function DoctorView({ screeningResult, symptoms, onChangeSettings, onNewChat }) {
   const { ringkasan, diagnosis, kode_icd10, spesialisasi, alasan_rekomendasi } = screeningResult
   const dokter = matchDoctor(spesialisasi, dokterList)
 
@@ -51,6 +51,7 @@ export default function DoctorView({ screeningResult, symptoms, onChangeSettings
           <span style={styles.badge}>✓ Skrining Selesai</span>
         </div>
         <div style={styles.topbarRight}>
+          <button style={styles.settingsBtn} onClick={onNewChat}>🔄 Baru</button>
           <button style={styles.settingsBtn} onClick={onChangeSettings}>⚙ Pengaturan</button>
           <button style={styles.copyBtn} onClick={handleCopy}>
             {copied ? '✓ Tersalin!' : '📋 Salin RME'}
