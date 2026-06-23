@@ -9,7 +9,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
   const { sendMessage, autoStart, isLoading } = useAgentLoop({
     apiKey: apiConfig.apiKey,
     model: apiConfig.model,
-    onAiMessage: (text) => setChatMessages(m => [...m, { from: 'ai', text }]),
+    onAiMessage: (text) => setChatMessages(m => [...m, { id: Date.now() + Math.random(), from: 'ai', text }]),
     onSymptom,
     onFinalize,
   })
@@ -24,7 +24,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
     e.preventDefault()
     const text = input.trim()
     if (!text || isLoading || screeningResult) return
-    setChatMessages(m => [...m, { from: 'patient', text }])
+    setChatMessages(m => [...m, { id: Date.now(), from: 'patient', text }])
     setInput('')
     sendMessage(text)
   }
@@ -46,8 +46,8 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
 
       {/* Chat */}
       <div style={styles.chat}>
-        {chatMessages.map((msg, i) => (
-          <div key={i} style={msg.from === 'ai' ? styles.rowAi : styles.rowPatient}>
+        {chatMessages.map((msg) => (
+          <div key={msg.id} style={msg.from === 'ai' ? styles.rowAi : styles.rowPatient}>
             {msg.from === 'ai' && <div style={styles.avatarAi}>👩‍⚕️</div>}
             <div style={msg.from === 'ai' ? styles.bubbleAi : styles.bubblePatient}>
               {msg.text}
