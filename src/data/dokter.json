@@ -1,0 +1,12 @@
+[
+  { "id": 1, "nama": "dr. Budi Santoso, Sp.PD", "spesialisasi": "Sp.PD", "bio": "Penyakit Dalam" },
+  { "id": 2, "nama": "dr. Sari Dewi, Sp.A", "spesialisasi": "Sp.A", "bio": "Anak" },
+  { "id": 3, "nama": "dr. Andi Pratama, Sp.OG", "spesialisasi": "Sp.OG", "bio": "Obstetri & Ginekologi" },
+  { "id": 4, "nama": "dr. Rina Kusuma, Sp.JP", "spesialisasi": "Sp.JP", "bio": "Jantung & Pembuluh Darah" },
+  { "id": 5, "nama": "dr. Hendra Wijaya, Sp.S", "spesialisasi": "Sp.S", "bio": "Saraf" },
+  { "id": 6, "nama": "dr. Maya Lestari, Sp.KK", "spesialisasi": "Sp.KK", "bio": "Kulit & Kelamin" },
+  { "id": 7, "nama": "dr. Dian Arif, Sp.B", "spesialisasi": "Sp.B", "bio": "Bedah Umum" },
+  { "id": 8, "nama": "dr. Fitri Handayani, Sp.M", "spesialisasi": "Sp.M", "bio": "Mata" },
+  { "id": 9, "nama": "dr. Agus Setiawan, GP", "spesialisasi": "GP", "bio": "Dokter Umum" },
+  { "id": 10, "nama": "dr. Lina Maharani, Sp.THT", "spesialisasi": "Sp.THT", "bio": "Telinga Hidung Tenggorokan" }
+]
