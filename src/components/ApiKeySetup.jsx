@@ -3,8 +3,7 @@ import { useState } from 'react'
 const MODELS = [
   { value: 'openrouter/free', label: '🆓 OpenRouter Free Router — otomatis pilih model gratis (direkomendasikan)' },
   { value: 'openai/gpt-oss-20b:free', label: '🆓 GPT-OSS 20B — Gratis' },
-  { value: 'google/gemma-4-31b-it:free', label: '🆓 Gemma 4 31B — Gratis' },
-  { value: 'google/gemini-flash-1.5', label: '⚡ Gemini Flash 1.5 — Sangat cepat' },
+  { value: 'google/gemini-flash-1.5', label: '⚡ Gemini Flash 1.5 — Cepat & andal' },
   { value: 'openai/gpt-4o-mini', label: '💰 GPT-4o Mini — Murah & andal' },
   { value: 'anthropic/claude-haiku-3', label: '💰 Claude Haiku 3 — Kualitas premium' },
 ]
