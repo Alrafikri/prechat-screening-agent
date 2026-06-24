@@ -5,6 +5,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
   const [chatMessages, setChatMessages] = useState([])
   const [input, setInput] = useState('')
   const bottomRef = useRef(null)
+  const inputRef = useRef(null)
 
   const { sendMessage, autoStart, isLoading } = useAgentLoop({
     apiKey: apiConfig.apiKey,
@@ -19,6 +20,12 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [chatMessages, isLoading])
+
+  useEffect(() => {
+    if (!isLoading && !screeningResult) {
+      inputRef.current?.focus()
+    }
+  }, [isLoading, screeningResult])
 
   function handleSend(e) {
     e.preventDefault()
@@ -84,6 +91,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
         )}
         <form onSubmit={handleSend} style={styles.inputRow}>
           <input
+            ref={inputRef}
             style={styles.chatInput}
             value={input}
             onChange={e => setInput(e.target.value)}
@@ -99,6 +107,14 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
           0%,80%,100%{transform:translateY(0);opacity:.5}
           40%{transform:translateY(-5px);opacity:1}
         }
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-10px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(10px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
       `}</style>
     </div>
   )
@@ -107,7 +123,7 @@ export default function PatientChat({ apiConfig, onSymptom, onFinalize, screenin
 const KAWUNG_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Ccircle cx='22' cy='9' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.08'/%3E%3Ccircle cx='22' cy='35' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.08'/%3E%3Ccircle cx='9' cy='22' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.08'/%3E%3Ccircle cx='35' cy='22' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.08'/%3E%3C/svg%3E")`
 
 const styles = {
-  page: { height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' },
+  page: { height: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' },
   kawung: { position: 'fixed', inset: 0, backgroundImage: KAWUNG_SVG, pointerEvents: 'none', zIndex: 0 },
   topbar: { position: 'relative', zIndex: 10, background: 'var(--surface)', borderBottom: '1.5px solid var(--border)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 },
   topbarLeft: { display: 'flex', alignItems: 'center', gap: 10 },
@@ -115,16 +131,16 @@ const styles = {
   logo: { width: 34, height: 34, background: 'var(--accent)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, boxShadow: '0 2px 6px rgba(212,146,10,.3)', flexShrink: 0 },
   title: { fontSize: 14, fontWeight: 800, letterSpacing: '-0.02em' },
   sub: { fontSize: 11.5, color: 'var(--muted)', fontWeight: 500 },
-  chat: { flex: 1, overflowY: 'auto', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 12, position: 'relative', zIndex: 1 },
+  chat: { flex: 1, overflowY: 'auto', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 8, position: 'relative', zIndex: 1 },
   rowAi: { display: 'flex', alignItems: 'flex-end', gap: 8, alignSelf: 'flex-start', maxWidth: '80%' },
   rowPatient: { display: 'flex', alignItems: 'flex-end', gap: 8, alignSelf: 'flex-end', flexDirection: 'row-reverse', maxWidth: '80%' },
   avatarAi: { width: 30, height: 30, borderRadius: '50%', background: 'var(--accent-light)', border: '1.5px solid rgba(212,146,10,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, flexShrink: 0 },
   avatarPatient: { width: 30, height: 30, borderRadius: '50%', background: '#E8F0FF', border: '1.5px solid rgba(59,130,246,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, flexShrink: 0 },
-  bubbleAi: { padding: '12px 16px', background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: '16px 16px 16px 4px', fontSize: 14, lineHeight: 1.6, boxShadow: '0 1px 4px rgba(26,35,50,.06)' },
-  bubblePatient: { padding: '12px 16px', background: 'var(--accent)', color: '#fff', borderRadius: '16px 16px 4px 16px', fontSize: 14, lineHeight: 1.6, boxShadow: '0 2px 8px rgba(212,146,10,.3)' },
-  typing: { padding: '14px 18px', background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: '16px 16px 16px 4px', display: 'flex', gap: 5, alignItems: 'center' },
+  bubbleAi: { padding: '12px 16px', background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: '16px 16px 16px 4px', fontSize: 14, lineHeight: 1.6, boxShadow: '0 1px 4px rgba(26,35,50,.06)', animation: 'slideInLeft 0.25s ease-out' },
+  bubblePatient: { padding: '12px 16px', background: 'var(--accent)', color: '#fff', borderRadius: '16px 16px 4px 16px', fontSize: 14, lineHeight: 1.6, boxShadow: '0 2px 8px rgba(212,146,10,.3)', animation: 'slideInRight 0.25s ease-out' },
+  typing: { padding: '14px 18px', background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: '16px 16px 16px 4px', display: 'flex', gap: 5, alignItems: 'center', animation: 'slideInLeft 0.2s ease-out' },
   dot: { width: 7, height: 7, borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'bounce 1.1s ease-in-out infinite' },
-  bottomBar: { position: 'relative', zIndex: 10, background: 'var(--surface)', borderTop: '1.5px solid var(--border)', padding: '12px 16px', flexShrink: 0 },
+  bottomBar: { position: 'relative', zIndex: 10, background: 'var(--surface)', borderTop: '1.5px solid var(--border)', padding: '12px 16px', flexShrink: 0, paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' },
   handoffBanner: { background: 'var(--green-light)', border: '1.5px solid rgba(45,106,79,.25)', borderRadius: 10, padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 10 },
   handoffText: { fontSize: 13, color: '#1E4D38', fontWeight: 600 },
   handoffBtn: { background: 'var(--green)', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 16px', fontSize: 13, fontWeight: 800, boxShadow: '0 3px 10px rgba(45,106,79,.35)', whiteSpace: 'nowrap' },
