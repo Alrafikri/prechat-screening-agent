@@ -60,8 +60,10 @@ export default function DoctorView({ screeningResult, symptoms, onChangeSettings
       </header>
 
       {/* Main split */}
-      <div style={styles.main}>
-        <AnamnesisSummary symptoms={symptoms} />
+      <div style={styles.main} className="doctor-main">
+        <div className="doctor-sidebar">
+          <AnamnesisSummary symptoms={symptoms} />
+        </div>
 
         <div style={styles.rightPanel}>
           <div style={styles.soapHeader}>
@@ -82,12 +84,24 @@ export default function DoctorView({ screeningResult, symptoms, onChangeSettings
           </div>
         </div>
       </div>
+      <style>{`
+  @media (max-width: 768px) {
+    .doctor-main {
+      grid-template-columns: 1fr !important;
+    }
+    .doctor-sidebar {
+      max-height: 200px;
+      overflow-y: auto;
+      border-bottom: 1.5px solid var(--border);
+    }
+  }
+`}</style>
     </div>
   )
 }
 
 const styles = {
-  page: { height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+  page: { height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
   topbar: { background: 'var(--surface)', borderBottom: '1.5px solid var(--border)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, zIndex: 10 },
   topbarLeft: { display: 'flex', alignItems: 'center', gap: 10 },
   logo: { width: 32, height: 32, background: 'var(--accent)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 },
