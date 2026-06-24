@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useQuestionnaire } from '../hooks/useQuestionnaire'
 import GreetingScreen from './GreetingScreen'
 import QuestionScreen from './QuestionScreen'
@@ -9,11 +8,6 @@ export default function QuestionnaireFlow({ apiConfig, onSymptom, onFinalize, sc
     onSymptom,
     onFinalize,
   })
-
-  useEffect(() => {
-    if (phase === 'done' && !screeningResult) {
-    }
-  }, [phase, screeningResult])
 
   function handleKeluhanSubmit(text) {
     submitKeluhan(text)
