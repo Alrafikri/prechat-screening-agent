@@ -13,6 +13,7 @@ export default function ApiKeySetup({ onSave, initialConfig }) {
   const [model, setModel] = useState(initialConfig?.model ?? MODELS[0].value)
   const [showKey, setShowKey] = useState(false)
   const [error, setError] = useState('')
+  const keyValid = apiKey.startsWith('sk-or-') && apiKey.length > 20
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -116,6 +117,11 @@ export default function ApiKeySetup({ onSave, initialConfig }) {
                 >
                   {showKey ? '🙈' : '👁'}
                 </button>
+                {apiKey.length > 0 && (
+                  <span style={{ position: 'absolute', right: 44, top: '50%', transform: 'translateY(-50%)', fontSize: 14, pointerEvents: 'none' }}>
+                    {keyValid ? '✅' : '❌'}
+                  </span>
+                )}
               </div>
               {error && <p style={styles.errorMsg}>{error}</p>}
             </div>
@@ -151,7 +157,7 @@ export default function ApiKeySetup({ onSave, initialConfig }) {
 const KAWUNG_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Ccircle cx='22' cy='9' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.13'/%3E%3Ccircle cx='22' cy='35' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.13'/%3E%3Ccircle cx='9' cy='22' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.13'/%3E%3Ccircle cx='35' cy='22' r='5.5' fill='none' stroke='%23D4920A' stroke-width='0.7' opacity='0.13'/%3E%3C/svg%3E")`
 
 const styles = {
-  page: { minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px 60px', position: 'relative' },
+  page: { minHeight: '100dvh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px 60px', position: 'relative' },
   kawung: { position: 'fixed', inset: 0, backgroundImage: KAWUNG_SVG, pointerEvents: 'none', zIndex: 0 },
   wrap: { position: 'relative', zIndex: 1, width: '100%', maxWidth: 660 },
   appBar: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 },
