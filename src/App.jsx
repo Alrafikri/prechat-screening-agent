@@ -24,10 +24,6 @@ export default function App() {
     setView('patient')
   }, [])
 
-  function handleSymptom(gejala, nilai) {
-    setSymptoms(s => [...s, { gejala, nilai }])
-  }
-
   const handleNewChat = useCallback(() => {
     setScreeningResult(null)
     setSymptoms([])
@@ -58,7 +54,6 @@ export default function App() {
     <QuestionnaireFlow
       key={chatKey}
       apiConfig={apiConfig}
-      onSymptom={handleSymptom}
       onFinalize={handleFinalize}
       screeningResult={screeningResult}
       onHandoff={handleHandoff}

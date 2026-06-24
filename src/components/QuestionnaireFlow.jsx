@@ -2,10 +2,9 @@ import { useQuestionnaire } from '../hooks/useQuestionnaire'
 import GreetingScreen from './GreetingScreen'
 import QuestionScreen from './QuestionScreen'
 
-export default function QuestionnaireFlow({ apiConfig, onSymptom, onFinalize, screeningResult, onHandoff, onNewChat, onChangeSettings }) {
-  const { phase, currentQuestion, answers, isLoading, error, submitKeluhan, submitAnswer, retry } = useQuestionnaire({
+export default function QuestionnaireFlow({ apiConfig, onFinalize, screeningResult, onHandoff, onNewChat, onChangeSettings }) {
+  const { phase, currentQuestion, isLoading, error, submitKeluhan, submitAnswer, retry } = useQuestionnaire({
     apiConfig,
-    onSymptom,
     onFinalize,
   })
 
@@ -53,8 +52,6 @@ export default function QuestionnaireFlow({ apiConfig, onSymptom, onFinalize, sc
               question={currentQuestion}
               onSubmit={handleAnswer}
               isLoading={isLoading}
-              questionNumber={answers.length + 1}
-              totalQuestions={null}
             />
           )}
 

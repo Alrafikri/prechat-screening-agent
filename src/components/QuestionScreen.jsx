@@ -4,16 +4,7 @@ import MultipleChoice from './MultipleChoice'
 import RatingScale from './RatingScale'
 import FreetextInput from './FreetextInput'
 
-function ProgressBar({ current, total }) {
-  if (!total) return null
-  return (
-    <div style={styles.progressTrack}>
-      <div style={{ ...styles.progressFill, width: `${(current / total) * 100}%` }} />
-    </div>
-  )
-}
-
-export default function QuestionScreen({ question, onSubmit, isLoading, questionNumber, totalQuestions }) {
+export default function QuestionScreen({ question, onSubmit, isLoading }) {
   if (!question) return null
 
   const { format, teks } = question
@@ -37,7 +28,6 @@ export default function QuestionScreen({ question, onSubmit, isLoading, question
 
   return (
     <div style={styles.container}>
-      <ProgressBar current={questionNumber} total={totalQuestions} />
       <div style={styles.card}>
         <p style={styles.teks}>{teks}</p>
         {renderInput()}
@@ -60,19 +50,6 @@ const styles = {
     padding: 24,
     position: 'relative',
     zIndex: 1,
-  },
-  progressTrack: {
-    height: 4,
-    background: 'var(--border)',
-    borderRadius: 2,
-    marginBottom: 24,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: '100%',
-    background: 'var(--accent)',
-    borderRadius: 2,
-    transition: 'width 0.4s ease',
   },
   card: {
     background: 'var(--surface)',

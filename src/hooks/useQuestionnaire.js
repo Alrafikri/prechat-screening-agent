@@ -45,21 +45,6 @@ export function useQuestionnaire({ apiConfig, onFinalize }) {
         {
           type: 'function',
           function: {
-            name: 'catat_gejala',
-            description: 'Catat gejala atau informasi medis. Tidak ditampilkan ke pasien.',
-            parameters: {
-              type: 'object',
-              properties: {
-                gejala: { type: 'string' },
-                nilai: { type: 'string' },
-              },
-              required: ['gejala', 'nilai'],
-            },
-          },
-        },
-        {
-          type: 'function',
-          function: {
             name: 'finalisasi_screening',
             description: 'Selesaikan screening dan buat ringkasan klinis.',
             parameters: {
@@ -119,8 +104,7 @@ export function useQuestionnaire({ apiConfig, onFinalize }) {
     setIsLoading(true)
     setError(null)
 
-    const newAnswers = [...answers, { question: currentQuestion.id, answer }]
-    setAnswers(newAnswers)
+    setAnswers(prev => [...prev, { question: currentQuestion.id, answer }])
 
     const history = [
       ...historyRef.current,
@@ -144,7 +128,7 @@ export function useQuestionnaire({ apiConfig, onFinalize }) {
     } finally {
       setIsLoading(false)
     }
-  }, [callApi, onFinalize, currentQuestion, answers])
+  }, [callApi, onFinalize, currentQuestion])
 
   const retry = useCallback(async () => {
     setIsLoading(true)
