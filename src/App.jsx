@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import ApiKeySetup from './components/ApiKeySetup'
-import PatientChat from './components/PatientChat'
+import QuestionnaireFlow from './components/QuestionnaireFlow'
 import DoctorView from './components/DoctorView'
 
 function loadConfig() {
@@ -55,7 +55,7 @@ export default function App() {
   )
 
   if (view === 'patient') return (
-    <PatientChat
+    <QuestionnaireFlow
       key={chatKey}
       apiConfig={apiConfig}
       onSymptom={handleSymptom}
